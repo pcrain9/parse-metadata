@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import { Routes, Route, useNavigate } from "react-router-dom";
 import Typography from "@mui/material/Typography";
+//import Typography from "@mui/material/Typography";
 
 import MetaParser from "./components/MetaParser";
 import DataTable from "./components/DataTable";

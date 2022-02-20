@@ -30,7 +30,7 @@ function MetaParser(props) {
 
     let arr = [];
     for (let i = 0; i < metaTags.length; i++) {
-      let tmp = { name: "", content: "" };
+      let tmp = { name: "", tagType:"meta", content: "" };
       for (let j = 0; j < metaTags[i].attributes.length; j++) {
         const currentTag = metaTags[i].attributes[j];
         if (currentTag.name === "property") {
@@ -58,7 +58,7 @@ function MetaParser(props) {
 
     //if there are link tags, parse them
     for (let i = 0; i < linkTags.length; i++) {
-      let tmp = { name: "", content: "" };
+      let tmp = { name: "", tagType:"link", content: "" };
       tmp.name = linkTags[i].attributes.rel.textContent;
       tmp.content = linkTags[i].attributes.href.textContent;
       arr.push(tmp);
