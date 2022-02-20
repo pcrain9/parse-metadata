@@ -5,10 +5,13 @@ import Button from "@mui/material/Button";
 
 function MetaParser(props) {
   const [userInput, setUserInput] = useState("");
+  const [error, setError] = useState(false);
   const parser = new DOMParser();
 
   function handlePaste(event) {
-    setUserInput(event.clipboardData.getData("Text"));
+    setError(false);
+    const data = event.clipboardData.getData("Text")
+    setUserInput(data);
   }
 
   function handleSubmit(event) {
@@ -24,13 +27,13 @@ function MetaParser(props) {
       .getElementsByTagName("link");
 
     if (metaTags.length === 0 && linkTags.length === 0) {
-      //error handler
+      setError(true);
       return;
     }
 
     let arr = [];
     for (let i = 0; i < metaTags.length; i++) {
-      let tmp = { name: "", tagType:"meta", content: "" };
+      let tmp = { name: "", tagType: "meta", content: "" };
       for (let j = 0; j < metaTags[i].attributes.length; j++) {
         const currentTag = metaTags[i].attributes[j];
         if (currentTag.name === "property") {
@@ -44,11 +47,10 @@ function MetaParser(props) {
         }
       }
       if (tmp.content === "") {
-        tmp.content = metaTags[i].nextSibling.data
+        tmp.content = metaTags[i].nextSibling.data;
       }
       arr.push(tmp);
     }
-    
 
     //if the html has no link tags, pass data up to app
     if (linkTags.length === 0) {
@@ -58,12 +60,12 @@ function MetaParser(props) {
 
     //if there are link tags, parse them
     for (let i = 0; i < linkTags.length; i++) {
-      let tmp = { name: "", tagType:"link", content: "" };
+      let tmp = { name: "", tagType: "link", content: "" };
       tmp.name = linkTags[i].attributes.rel.textContent;
       tmp.content = linkTags[i].attributes.href.textContent;
       arr.push(tmp);
     }
-    props.onSaveParsedData(arr)
+    props.onSaveParsedData(arr);
   }
 
   return (
@@ -75,18 +77,22 @@ function MetaParser(props) {
       rowSpacing={4}
       onSubmit={handleSubmit}
     >
-      <Grid item xs={7}>
+      <Grid item xs={11}>
         <TextField
           multiline
           required
-          rows={10}
+          error={error}
+          helperText={
+            error ? "Couldn't find any meta tags in your snippet :(" : ""
+          }
+          rows={12}
           fullWidth={true}
           placeholder="paste HTML here..."
           onPaste={handlePaste}
           value={userInput}
         />
       </Grid>
-      <Grid item xs={7}>
+      <Grid item xs={11}>
         <Button type="submit" variant="contained">
           Submit
         </Button>

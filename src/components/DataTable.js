@@ -1,7 +1,6 @@
 import * as React from "react";
 import PropTypes from "prop-types";
 import Box from "@mui/material/Box";
-import Button from "@mui/material/Button";
 import Table from "@mui/material/Table";
 import TableBody from "@mui/material/TableBody";
 import TableCell from "@mui/material/TableCell";
@@ -12,7 +11,6 @@ import TableRow from "@mui/material/TableRow";
 import TableSortLabel from "@mui/material/TableSortLabel";
 import Paper from "@mui/material/Paper";
 import { visuallyHidden } from "@mui/utils";
-import { useNavigate } from "react-router-dom";
 
 function descendingComparator(a, b, orderBy) {
   if (b[orderBy] < a[orderBy]) {
@@ -110,7 +108,6 @@ export default function EnhancedTable(props) {
   const [orderBy, setOrderBy] = React.useState("a");
   const [page, setPage] = React.useState(0);
   const [rowsPerPage, setRowsPerPage] = React.useState(5);
-  const navigate = useNavigate();
 
   const handleRequestSort = (event, property) => {
     const isAsc = orderBy === property && order === "asc";
@@ -126,9 +123,6 @@ export default function EnhancedTable(props) {
     setRowsPerPage(parseInt(event.target.value, 10));
     setPage(0);
   };
-  function handleBackToParser() {
-    navigate("/")
-  }
 
   // Avoid a layout jump when reaching the last page with empty rows.
   const emptyRows =
@@ -136,7 +130,7 @@ export default function EnhancedTable(props) {
 
   return (
     <Box sx={{ width: "100%" }}>
-      <Paper sx={{ width: "100%", mb: 2 }}>
+      <Paper sx={{ width: "95%", mb: 2 }}>
         <TableContainer>
           <Table
             sx={{ minWidth: 750 }}
@@ -153,7 +147,7 @@ export default function EnhancedTable(props) {
                 .map((row) => {
 
                   return (
-                    <TableRow hover tabIndex={-1} key={row.name}>
+                    <TableRow hover tabIndex={-1} key={Math.random()}>
                       <TableCell
                         component="th"
                         scope="row"
@@ -187,7 +181,6 @@ export default function EnhancedTable(props) {
           onRowsPerPageChange={handleChangeRowsPerPage}
         />
       </Paper>
-      <Button onClick={handleBackToParser}>Go back</Button>
     </Box>
   );
 }
