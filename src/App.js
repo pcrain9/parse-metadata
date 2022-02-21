@@ -18,6 +18,9 @@ function App() {
         <Typography variant="h3" textAlign="center">
           Metadata Parser!
         </Typography>
+        <Typography paragraph textAlign="center" sx={{ textDecoration:"italicized"}}>
+          <em>Paste any metadata into the text area to the left!</em>
+        </Typography>
       </Grid>
       <Grid item xs={6}>
         <MetaParser onSaveParsedData={handleSaveParsedData} />

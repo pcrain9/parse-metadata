@@ -79,6 +79,7 @@ function MetaParser(props) {
     >
       <Grid item xs={11}>
         <TextField
+          data-testid="meta-data-input"
           multiline
           required
           error={error}
